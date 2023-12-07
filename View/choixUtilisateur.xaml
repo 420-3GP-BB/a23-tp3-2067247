@@ -8,6 +8,7 @@
     Title="Choix utilisateur"
     Width="350"
     Height="170"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid>
         <StackPanel HorizontalAlignment="Center">
@@ -18,7 +19,8 @@
                 Text="Choisissez un utilisateur" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontSize="15" Text="Utilisateur: " />
-                <ListBox Width="250" Margin="20,0,0,0" />
+                <ComboBox Width="200" Margin="20,0,0,0" />
+
             </StackPanel>
             <Button
                 Width="100"

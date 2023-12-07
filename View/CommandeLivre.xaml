@@ -8,6 +8,7 @@
     Title="CommandeLivre"
     Width="500"
     Height="275"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid>
         <StackPanel>
