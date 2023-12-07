@@ -1,0 +1,31 @@
+﻿<Window
+    x:Class="View.choixUtilisateur"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Choix utilisateur"
+    Width="350"
+    Height="170"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock
+                Margin="0,20,0,20"
+                HorizontalAlignment="Center"
+                FontSize="15"
+                Text="Choisissez un utilisateur" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="15" Text="Utilisateur: " />
+                <ListBox Width="250" Margin="20,0,0,0" />
+            </StackPanel>
+            <Button
+                Width="100"
+                Margin="0,20,0,20"
+                Content="Confirmer" />
+
+        </StackPanel>
+
+    </Grid>
+</Window>
