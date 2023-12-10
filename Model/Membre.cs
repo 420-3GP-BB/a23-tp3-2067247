@@ -39,7 +39,7 @@ namespace Model
             foreach (XmlElement livreXml in livresNodes)
             {
                 long isbn = long.Parse( livreXml.GetAttribute("ISBN-13"));
-                ListeISBNLivres.Append(isbn);
+                ListeISBNLivres.Add(isbn);
             }
             XmlNodeList commandesNodes = elem.SelectNodes("commande");
             foreach (XmlElement commandeXml in commandesNodes)

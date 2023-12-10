@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ViewModel;
 
+
 namespace View
 {
     /// <summary>
@@ -19,8 +20,11 @@ namespace View
     {
         private ViewModelBibliotheque _viewModel;
         public MainWindow()
-        {_viewModel = new ViewModelBibliotheque();
+
+        {
             InitializeComponent();
+            _viewModel = new ViewModelBibliotheque();
+           // InitializeComponent();
             DataContext = _viewModel;
 
         }
