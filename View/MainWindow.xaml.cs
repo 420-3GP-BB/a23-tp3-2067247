@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ViewModel;
 
 namespace View
 {
@@ -16,9 +17,12 @@ namespace View
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ViewModelBibliotheque _viewModel;
         public MainWindow()
-        {
+        {_viewModel = new ViewModelBibliotheque();
             InitializeComponent();
+            DataContext = _viewModel;
+
         }
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();

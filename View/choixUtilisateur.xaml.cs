@@ -23,5 +23,10 @@ namespace View
         {
             InitializeComponent();
         }
+
+        private void ComboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -19,7 +19,8 @@
                 Text="Choisissez un utilisateur" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontSize="15" Text="Utilisateur: " />
-                <ComboBox Width="200" Margin="20,0,0,0" />
+                <ComboBox Width="200" ItemsSource="{Binding ListeMembres}"
+                          x:Name="ComboBoxUser" Margin="20,0,0,0" SelectionChanged="ComboBoxUser_SelectionChanged" />
 
             </StackPanel>
             <Button
