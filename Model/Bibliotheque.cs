@@ -33,15 +33,15 @@ namespace Model
             DernierUtilisateur = elem.GetAttribute("dernierUtilisateur");
 
             XmlNodeList membresNodes = elem.SelectNodes("membres/membre");
-            foreach (XmlNode membreNode in membresNodes)
+            foreach (XmlElement membreNode in membresNodes)
             {
-                Membre membre = new Membre();
-                membre.DeXML((XmlElement)membreNode);
+                Membre membre = new Membre(membreNode);
+                membre.DeXML(membreNode);
                 ListeMembres.Add(membre);
             }
 
             XmlNodeList livresNodes = elem.SelectNodes("livres/livre");
-            foreach (XmlNode livreNode in livresNodes)
+            foreach (XmlElement livreNode in livresNodes)
             {
                 Livre livre = new Livre(livreNode);
                 DictionnaireLivres.Add(livre.ISBN13, livre);
