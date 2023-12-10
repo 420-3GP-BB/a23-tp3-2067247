@@ -8,7 +8,6 @@
     Title="Choix utilisateur"
     Width="350"
     Height="170"
-    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid>
         <StackPanel HorizontalAlignment="Center">
@@ -19,9 +18,17 @@
                 Text="Choisissez un utilisateur" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontSize="15" Text="Utilisateur: " />
-                <ComboBox Width="200" ItemsSource="{Binding ListeMembres}"
-                          x:Name="ComboBoxUser" Margin="20,0,0,0" SelectionChanged="ComboBoxUser_SelectionChanged" />
+<<<<<<< HEAD
+                <ComboBox
+                    x:Name="ComboBoxUser"
+                    Width="200"
+                    Margin="20,0,0,0"
+                    ItemsSource="{Binding ListeMembres}"
+                    SelectionChanged="ComboBoxUser_SelectionChanged" />
 
+=======
+                <ListBox Width="250" Margin="20,0,0,0" />
+>>>>>>> parent of 42fc102 (J'ai creer les binding command pour l'ouverture des fenetres)
             </StackPanel>
             <Button
                 Width="100"

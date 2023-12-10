@@ -35,31 +35,8 @@
         </Style>
 
 
-
     </Window.Resources>
-    <Window.CommandBindings>
 
-        <CommandBinding
-            CanExecute="ChangerUser_CanExecute"
-            Command="{x:Static local:MainWindow.ChangerUserCmd}"
-            Executed="ChangerUser_Executed" />
-        <CommandBinding
-            CanExecute="CommanderLivre_CanExecute"
-            Command="{x:Static local:MainWindow.CommanderLivreCmd}"
-            Executed="CommanderLivre_Executed" />
-        <CommandBinding
-            CanExecute="OuvrirAdmin_CanExecute"
-            Command="{x:Static local:MainWindow.OuvrirAdminCmd}"
-            Executed="OuvrirAdmin_Executed" />
-        <CommandBinding
-            CanExecute="Quitter_CanExecute"
-            Command="{x:Static local:MainWindow.QuitterCmd}"
-            Executed="Quitter_Executed" />
-        <CommandBinding
-            CanExecute="TransfererLivre_CanExecute"
-            Command="{x:Static local:MainWindow.TransfererLivreCmd}"
-            Executed="TransfererLivre_Executed" />
-    </Window.CommandBindings>
     <Grid>
 
         <Grid.RowDefinitions>
@@ -90,18 +67,9 @@
             HorizontalAlignment="Center"
             Orientation="Horizontal">
 
-            <Button
-                Command="{x:Static local:MainWindow.ChangerUserCmd}"
-                Content="Changer d'utlisateur"
-                Style="{StaticResource styleBouton}" />
-            <Button
-                Command="{x:Static local:MainWindow.OuvrirAdminCmd}"
-                Content="Mode administrateur"
-                Style="{StaticResource styleBouton}" />
-            <Button
-                Command="{x:Static local:MainWindow.QuitterCmd}"
-                Content="Quitter"
-                Style="{StaticResource styleBouton}" />
+            <Button Content="Changer d'utlisateur" Style="{StaticResource styleBouton}" />
+            <Button Content="Mode administrateur" Style="{StaticResource styleBouton}" />
+            <Button Content="Quitter" Style="{StaticResource styleBouton}" />
         </StackPanel>
 
 
@@ -118,7 +86,7 @@
                 FontSize="20"
                 FontWeight="Bold"
                 Text="Livres de l'utilisateur" />
-            <ListBox
+            <TextBox
                 Width="600"
                 Height="450"
                 Margin="2,15,15,15" />
@@ -130,13 +98,11 @@
                 <Button
                     Width="145"
                     Margin="2,0,155,15"
-                    Command="{x:Static local:MainWindow.CommanderLivreCmd}"
                     Content="Commander livre"
                     FontSize="15" />
                 <Button
                     Width="145"
                     Margin="2,0,15,15"
-                    Command="{x:Static local:MainWindow.TransfererLivreCmd}"
                     Content="Transférer livre"
                     FontSize="15" />
             </StackPanel>
@@ -155,7 +121,7 @@
                         FontSize="20"
                         FontWeight="Bold"
                         Text="Commandes en attente" />
-                    <ListBox
+                    <TextBox
                         Width="600"
                         Height="175"
                         Margin="2,15,1,15" />
@@ -173,7 +139,7 @@
                         FontSize="20"
                         FontWeight="Bold"
                         Text="Commandes traitées" />
-                    <ListBox
+                    <TextBox
                         Width="600"
                         Height="175"
                         Margin="2,15,1,15" />

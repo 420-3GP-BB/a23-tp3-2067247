@@ -28,6 +28,7 @@ namespace View
             DataContext = _viewModel;
 
         }
+<<<<<<< HEAD
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
 
@@ -38,9 +39,9 @@ namespace View
 
         private void ChangerUser_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            choixUtilisateur choixUtilisateur = new choixUtilisateur();
-            choixUtilisateur.Owner = this;
-            choixUtilisateur.ShowDialog();
+            choixUtilisateur _choixUtilisateur = new choixUtilisateur();
+            _choixUtilisateur.Owner = this;
+            _choixUtilisateur.ShowDialog();
         }
 
         public static RoutedCommand CommanderLivreCmd = new RoutedCommand();
@@ -96,5 +97,7 @@ namespace View
             choixUtilisateur.Owner = this;
             choixUtilisateur.ShowDialog();
         }
+=======
+>>>>>>> parent of 42fc102 (J'ai creer les binding command pour l'ouverture des fenetres)
     }
 }
