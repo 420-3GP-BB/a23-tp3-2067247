@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,17 +13,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ViewModel;
 
 namespace View
 {
    
     public partial class choixUtilisateur : Window
     {
-        public choixUtilisateur()
+        ViewModelBibliotheque _viewModel;
+        public choixUtilisateur(ViewModelBibliotheque viewModel)
         {
             InitializeComponent();
+           _viewModel = viewModel;
+            DataContext = viewModel;
         }
 
+        public ObservableCollection<Membre> listeMembres
+        {
+            get => _viewModel.listeMembres;
+        }
         private void ComboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

@@ -23,7 +23,8 @@
                     x:Name="ComboBoxUser"
                     Width="200"
                     Margin="20,0,0,0"
-                    ItemsSource="{Binding ListeMembres}"
+                    DisplayMemberPath="Nom"
+                    ItemsSource="{Binding listeMembres}"
                     SelectionChanged="ComboBoxUser_SelectionChanged" />
 
 

@@ -20,6 +20,7 @@ namespace Model
         {
             ListeMembres = new ObservableCollection<Membre>();
             DictionnaireLivres = new Dictionary<long, Livre>();
+            
         }
 
         public XmlElement VersXML(XmlDocument doc)

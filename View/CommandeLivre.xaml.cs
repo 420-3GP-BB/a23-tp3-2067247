@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ViewModel;
 
 namespace View
 {
@@ -19,9 +20,12 @@ namespace View
     /// </summary>
     public partial class CommandeLivre : Window
     {
-        public CommandeLivre()
+        ViewModelBibliotheque _viewModel;
+        public CommandeLivre(ViewModelBibliotheque viewModel)
         {
             InitializeComponent();
+            _viewModel = viewModel;
+            DataContext = viewModel;
         }
 
         

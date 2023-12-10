@@ -38,7 +38,7 @@ namespace View
 
         private void ChangerUser_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            choixUtilisateur _choixUtilisateur = new choixUtilisateur();
+            choixUtilisateur _choixUtilisateur = new choixUtilisateur(_viewModel);
             _choixUtilisateur.Owner = this;
             _choixUtilisateur.ShowDialog();
         }
@@ -52,7 +52,7 @@ namespace View
 
         private void CommanderLivre_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            CommandeLivre commandeLivre = new CommandeLivre();
+            CommandeLivre commandeLivre = new CommandeLivre(_viewModel);
             commandeLivre.Owner = this;
             commandeLivre.ShowDialog();
         }
@@ -66,7 +66,7 @@ namespace View
 
         private void OuvrirAdmin_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FenetreAdmin fenetreAdmin = new FenetreAdmin();
+            FenetreAdmin fenetreAdmin = new FenetreAdmin(_viewModel);
             fenetreAdmin.Owner = this;
             fenetreAdmin.ShowDialog();
         }
@@ -92,7 +92,7 @@ namespace View
 
         private void TransfererLivre_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            choixUtilisateur choixUtilisateur = new choixUtilisateur();
+            choixUtilisateur choixUtilisateur = new choixUtilisateur(_viewModel);
             choixUtilisateur.Owner = this;
             choixUtilisateur.ShowDialog();
         }
