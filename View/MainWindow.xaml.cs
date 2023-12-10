@@ -24,11 +24,10 @@ namespace View
         {
             InitializeComponent();
             _viewModel = new ViewModelBibliotheque();
-           // InitializeComponent();
+            // InitializeComponent();
             DataContext = _viewModel;
 
         }
-<<<<<<< HEAD
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
 
@@ -81,7 +80,7 @@ namespace View
 
         private void Quitter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-           this.Close();
+            this.Close();
         }
 
         public static RoutedCommand TransfererLivreCmd = new RoutedCommand();
@@ -97,7 +96,5 @@ namespace View
             choixUtilisateur.Owner = this;
             choixUtilisateur.ShowDialog();
         }
-=======
->>>>>>> parent of 42fc102 (J'ai creer les binding command pour l'ouverture des fenetres)
     }
 }

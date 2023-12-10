@@ -21,6 +21,7 @@ namespace Model
         public Membre(XmlElement element)
         {
             DeXML(element);
+            
         }
 
         public XmlElement VersXML(XmlDocument doc)
@@ -30,6 +31,9 @@ namespace Model
 
         public void DeXML(XmlElement elem)
         {
+            ListeISBNLivres = new ObservableCollection<long>();
+            ListeISBNCommandesTraites = new ObservableCollection<long>();
+            ListeISBNCommandesAttente = new ObservableCollection<long>();
             Nom = elem.GetAttribute("nom");
             Administrateur = bool.Parse(elem.GetAttribute("administrateur"));
 

@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace View
 {
-    /// <summary>
-    /// Logique d'interaction pour choixUtilisateur.xaml
-    /// </summary>
+   
     public partial class choixUtilisateur : Window
     {
         public choixUtilisateur()
