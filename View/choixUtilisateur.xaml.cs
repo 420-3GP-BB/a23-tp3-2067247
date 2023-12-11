@@ -26,11 +26,16 @@ namespace View
             InitializeComponent();
            _viewModel = viewModel;
             DataContext = viewModel;
+            ComboBoxUser.SelectedItem = _viewModel.DernierUtilisateur;
         }
 
         public ObservableCollection<Membre> listeMembres
         {
             get => _viewModel.listeMembres;
+        }
+        public Membre dernierUtilisateur
+        {
+            get => _viewModel.DernierUtilisateur;
         }
         private void ComboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

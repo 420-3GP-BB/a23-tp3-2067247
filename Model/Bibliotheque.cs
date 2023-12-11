@@ -11,16 +11,17 @@ namespace Model
 {
     public class Bibliotheque : IconversionXML
     {
-        public string DernierUtilisateur { get; set; }
-        public ObservableCollection<Membre> ListeMembres { get; set; }
-        public Dictionary<long, Livre> DictionnaireLivres { get; set; }
-        
+        public Membre DernierUtilisateur { get; set; }
+        public ObservableCollection<Membre> ListeMembres { get; private set; }
+        public Dictionary<long, Livre> DictionnaireLivres { get; private set; }
+        private string DernierUtilisateurNom;
 
         public Bibliotheque()
         {
             ListeMembres = new ObservableCollection<Membre>();
             DictionnaireLivres = new Dictionary<long, Livre>();
-            
+            Membre test = new Membre();
+            DernierUtilisateur = test;
         }
 
         public XmlElement VersXML(XmlDocument doc)
@@ -31,15 +32,20 @@ namespace Model
         public void DeXML(XmlElement elem)
         {
             
-            DernierUtilisateur = elem.GetAttribute("dernierUtilisateur");
+            DernierUtilisateurNom = elem.GetAttribute("dernierUtilisateur").Trim();
 
             XmlNodeList membresNodes = elem.SelectNodes("membres/membre");
             foreach (XmlElement membreNode in membresNodes)
             {
                 Membre membre = new Membre(membreNode);
+                string nomMembre= membre.Nom.Trim();
                 membre.DeXML(membreNode);
                 ListeMembres.Add(membre);
+              // if(nomMembre.Equals(DernierUtilisateurNom))
+               // { DernierUtilisateur = membre; }
+                
             }
+            
 
             XmlNodeList livresNodes = elem.SelectNodes("livres/livre");
             foreach (XmlElement livreNode in livresNodes)
@@ -54,9 +60,8 @@ namespace Model
 
             XmlDocument doc = new XmlDocument();
             doc.Load(nomFichier);
-            XmlElement rootElement = doc.DocumentElement;
-            DernierUtilisateur = rootElement.GetAttribute("dernierUtilisateur");
-            DeXML(rootElement);
+            XmlElement racine = doc.DocumentElement;
+            DeXML(racine);
 
         }
 

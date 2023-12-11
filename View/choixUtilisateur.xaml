@@ -25,10 +25,10 @@
                     Margin="20,0,0,0"
                     DisplayMemberPath="Nom"
                     ItemsSource="{Binding listeMembres}"
+                    SelectedItem="{Binding dernierUtilisateur, Mode=TwoWay}" 
                     SelectionChanged="ComboBoxUser_SelectionChanged" />
 
-
-
+                <TextBlock Text="{Binding dernierUtilisateur.Nom}" />
 
             </StackPanel>
             <Button

@@ -23,6 +23,7 @@ namespace Model
             DeXML(element);
             
         }
+        public Membre () { Nom = "nom"; Administrateur = false; }
        
 
         public XmlElement VersXML(XmlDocument doc)
@@ -64,6 +65,7 @@ namespace Model
 
         }
 
-
+       
+       
     }
 }
