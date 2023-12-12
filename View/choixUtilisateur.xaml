@@ -10,6 +10,12 @@
     Height="170"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding
+            CanExecute="Comfirmer_CanExecute"
+            Command="{x:Static local:choixUtilisateur.Comfirmercmd}"
+            Executed="Comfirmer_Executed" />
+    </Window.CommandBindings>
     <Grid>
         <StackPanel HorizontalAlignment="Center">
             <TextBlock
@@ -35,6 +41,7 @@
             <Button
                 Width="100"
                 Margin="0,20,0,20"
+                Command="{x:Static local:choixUtilisateur.Comfirmercmd}"
                 Content="Confirmer" />
 
         </StackPanel>

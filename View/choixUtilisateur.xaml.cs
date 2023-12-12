@@ -21,16 +21,16 @@ namespace View
     public partial class choixUtilisateur : Window
     {
         ViewModelBibliotheque _viewModel;
-        
+        public Membre selection{ get; private set; }
         public choixUtilisateur(ViewModelBibliotheque viewModel)
         {
             InitializeComponent();
            _viewModel = viewModel;
             DataContext = viewModel;
-            Membre membreSelectionne = MembreActif;
-            ComboBoxUser.SelectedItem=membreSelectionne;
-           
             
+
+
+
         }
 
         public ObservableCollection<Membre> listeMembres
@@ -41,7 +41,19 @@ namespace View
         {
             get => _viewModel.MembreActif;
         }
-        
+        public static RoutedCommand Comfirmercmd = new RoutedCommand();
+
+        private void Comfirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ComboBoxUser.SelectedItem != null;
+        }
+
+        private void Comfirmer_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            selection = (Membre)ComboBoxUser.SelectedItem;
+
+            this.Close();
+        }
         private void ComboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

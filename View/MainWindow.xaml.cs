@@ -12,16 +12,16 @@ using ViewModel;
 using Model;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private ViewModelBibliotheque _viewModel;
-        public Membre UtilisateurActif;
         public ObservableCollection<Livre> LivresUtilisateur;
         public ObservableCollection<Commande> CommandesAttente;
         public ObservableCollection<Commande> CommandesTraitees;
@@ -31,9 +31,7 @@ namespace View
             InitializeComponent();
             _viewModel = new ViewModelBibliotheque();
             DataContext = _viewModel;
-            UtilisateurActif=_viewModel.MembreActif;
             NomUtilisateur.Text = UtilisateurActif.Nom;
-
             LivresUtilisateur = UtilisateurActif.ListeLivres;
             CommandesAttente = UtilisateurActif.ListeCommandesAttente;
             CommandesTraitees = UtilisateurActif.ListeCommandesTraites;
@@ -44,7 +42,11 @@ namespace View
 
         }
 
-
+        public Membre UtilisateurActif
+        {
+            get { return _viewModel.MembreActif; }
+            set { _viewModel.MembreActif = value; }
+        }
 
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
@@ -59,6 +61,10 @@ namespace View
             choixUtilisateur _choixUtilisateur = new choixUtilisateur(_viewModel);
             _choixUtilisateur.Owner = this;
             _choixUtilisateur.ShowDialog();
+            UtilisateurActif = _choixUtilisateur.selection;
+            OnPropertyChanged(nameof(*));
+
+
         }
 
         public static RoutedCommand CommanderLivreCmd = new RoutedCommand();
@@ -103,6 +109,8 @@ namespace View
 
         public static RoutedCommand TransfererLivreCmd = new RoutedCommand();
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         private void TransfererLivre_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -114,7 +122,10 @@ namespace View
             choixUtilisateur.Owner = this;
             choixUtilisateur.ShowDialog();
         }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-       
     }
 }

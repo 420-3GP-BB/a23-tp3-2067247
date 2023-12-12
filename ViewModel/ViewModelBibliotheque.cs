@@ -16,7 +16,8 @@ namespace ViewModel
         public ObservableCollection<Membre> listeMembres {
             get => bibliotheque.ListeMembres; }
        
-        public Membre MembreActif { get => bibliotheque.DernierUtilisateur;
+        public Membre MembreActif { 
+            get => bibliotheque.DernierUtilisateur;
             set => bibliotheque.DernierUtilisateur = value;
         }
 
