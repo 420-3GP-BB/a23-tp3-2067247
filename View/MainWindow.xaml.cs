@@ -19,7 +19,7 @@ namespace View
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         private ViewModelBibliotheque _viewModel;
         public ObservableCollection<Livre> LivresUtilisateur;
@@ -31,23 +31,14 @@ namespace View
             InitializeComponent();
             _viewModel = new ViewModelBibliotheque();
             DataContext = _viewModel;
-            NomUtilisateur.Text = UtilisateurActif.Nom;
-            LivresUtilisateur = UtilisateurActif.ListeLivres;
-            CommandesAttente = UtilisateurActif.ListeCommandesAttente;
-            CommandesTraitees = UtilisateurActif.ListeCommandesTraites;
-            LivresUser.ItemsSource = LivresUtilisateur;
-            UserCommandesAttente.ItemsSource = CommandesAttente;
-            UserCommandesTraitees.ItemsSource= CommandesTraitees;
+          
 
 
         }
 
-        public Membre UtilisateurActif
-        {
-            get { return _viewModel.MembreActif; }
-            set { _viewModel.MembreActif = value; }
-        }
 
+
+        
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
 
@@ -58,11 +49,13 @@ namespace View
 
         private void ChangerUser_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+           
             choixUtilisateur _choixUtilisateur = new choixUtilisateur(_viewModel);
             _choixUtilisateur.Owner = this;
             _choixUtilisateur.ShowDialog();
-            UtilisateurActif = _choixUtilisateur.selection;
-            OnPropertyChanged(nameof(*));
+            if (_choixUtilisateur.selection != null) { 
+            _viewModel.ChangerDernierUtilisateur(_choixUtilisateur.selection); 
+           }
 
 
         }
@@ -80,12 +73,13 @@ namespace View
             commandeLivre.Owner = this;
             commandeLivre.ShowDialog();
         }
-
+        
         public static RoutedCommand OuvrirAdminCmd = new RoutedCommand();
-
+        
         private void OuvrirAdmin_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+
         }
 
         private void OuvrirAdmin_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -121,11 +115,9 @@ namespace View
             choixUtilisateur choixUtilisateur = new choixUtilisateur(_viewModel);
             choixUtilisateur.Owner = this;
             choixUtilisateur.ShowDialog();
+            
         }
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+      
 
     }
 }

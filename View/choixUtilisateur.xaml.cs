@@ -37,10 +37,7 @@ namespace View
         {
             get => _viewModel.listeMembres;
         }
-        public Membre MembreActif
-        {
-            get => _viewModel.MembreActif;
-        }
+       
         public static RoutedCommand Comfirmercmd = new RoutedCommand();
 
         private void Comfirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -54,9 +51,6 @@ namespace View
 
             this.Close();
         }
-        private void ComboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
     }
 }

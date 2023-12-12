@@ -12,7 +12,7 @@ namespace Model
 {
     public class Bibliotheque : IconversionXML
     {
-        public Membre DernierUtilisateur { get; set; }
+        public Membre DernierUtilisateur { get; private set; }
         public ObservableCollection<Membre> ListeMembres { get; private set; }
         public Dictionary<long, Livre> DictionnaireLivres { get; private set; }
         private string DernierUtilisateurNom;
@@ -22,6 +22,10 @@ namespace Model
             ListeMembres = new ObservableCollection<Membre>();
             DictionnaireLivres = new Dictionary<long, Livre>();
            
+        }
+        public void ChangerDernierUtilisateur(Membre utilisateur)
+        {
+            DernierUtilisateur = utilisateur;
         }
 
         public XmlElement VersXML(XmlDocument doc)

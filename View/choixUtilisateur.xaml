@@ -32,8 +32,7 @@
                     Margin="20,0,0,0"
                     DisplayMemberPath="Nom"
                     ItemsSource="{Binding listeMembres}"
-                    SelectedItem="{Binding MembreActif}"
-                    SelectionChanged="ComboBoxUser_SelectionChanged" />
+                    SelectedItem="{Binding Path=listeMembres[0], Mode=OneWay}" />
 
 
 
