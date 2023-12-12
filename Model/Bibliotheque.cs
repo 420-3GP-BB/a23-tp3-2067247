@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
+using System.Diagnostics;
 
 namespace Model
 {
@@ -20,8 +21,7 @@ namespace Model
         {
             ListeMembres = new ObservableCollection<Membre>();
             DictionnaireLivres = new Dictionary<long, Livre>();
-            Membre test = new Membre();
-            DernierUtilisateur = test;
+           
         }
 
         public XmlElement VersXML(XmlDocument doc)
@@ -31,7 +31,16 @@ namespace Model
 
         public void DeXML(XmlElement elem)
         {
-            
+
+
+            XmlNodeList livresNodes = elem.SelectNodes("livres/livre");
+            foreach (XmlElement livreNode in livresNodes)
+            {
+                Livre livre = new Livre(livreNode);
+                DictionnaireLivres.Add(livre.ISBN13, livre);
+            }
+
+
             DernierUtilisateurNom = elem.GetAttribute("dernierUtilisateur").Trim();
 
             XmlNodeList membresNodes = elem.SelectNodes("membres/membre");
@@ -41,17 +50,42 @@ namespace Model
                 string nomMembre= membre.Nom.Trim();
                 membre.DeXML(membreNode);
                 ListeMembres.Add(membre);
-              // if(nomMembre.Equals(DernierUtilisateurNom))
-               // { DernierUtilisateur = membre; }
-                
-            }
-            
+              if(nomMembre.Equals(DernierUtilisateurNom))
+                { DernierUtilisateur = membre; }
+              foreach(long isbn in membre.ISBNLivres)
+                {
+                   if (DictionnaireLivres.ContainsKey(isbn))
+                   {
+                        Livre livre = DictionnaireLivres[isbn];
+                        membre.ListeLivres.Add(livre);
+                   }
 
-            XmlNodeList livresNodes = elem.SelectNodes("livres/livre");
-            foreach (XmlElement livreNode in livresNodes)
-            {
-                Livre livre = new Livre(livreNode);
-                DictionnaireLivres.Add(livre.ISBN13, livre);
+                    
+                }
+                foreach (long isbn in membre.ISBNCommandesAttente)
+                {
+                    if (DictionnaireLivres.ContainsKey(isbn))
+                    {
+                        Livre livreApproprie = DictionnaireLivres[isbn];
+                        Commande commande = new Commande(livreApproprie.ISBN13, livreApproprie.Titre, livreApproprie.Auteur, livreApproprie.Editeur, livreApproprie.Annee, "Attente");
+                        membre.ListeCommandesAttente.Add(commande);
+                     
+                    }
+                }
+                foreach (long isbn in membre.ISBNCommandesTraites)
+                {
+                    if (DictionnaireLivres.ContainsKey(isbn))
+                    {
+                        Livre livreApproprie = DictionnaireLivres[isbn];
+                        Commande commande = new Commande(livreApproprie.ISBN13, livreApproprie.Titre, livreApproprie.Auteur, livreApproprie.Editeur, livreApproprie.Annee, "Attente");
+                        membre.ListeCommandesTraites.Add(commande);
+
+                    }
+                }
+
+
+
+
             }
         }
         public void ChargerEntrees(string nomFichier)

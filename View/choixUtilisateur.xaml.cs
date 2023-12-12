@@ -21,22 +21,27 @@ namespace View
     public partial class choixUtilisateur : Window
     {
         ViewModelBibliotheque _viewModel;
+        
         public choixUtilisateur(ViewModelBibliotheque viewModel)
         {
             InitializeComponent();
            _viewModel = viewModel;
             DataContext = viewModel;
-            ComboBoxUser.SelectedItem = _viewModel.DernierUtilisateur;
+            Membre membreSelectionne = MembreActif;
+            ComboBoxUser.SelectedItem=membreSelectionne;
+           
+            
         }
 
         public ObservableCollection<Membre> listeMembres
         {
             get => _viewModel.listeMembres;
         }
-        public Membre dernierUtilisateur
+        public Membre MembreActif
         {
-            get => _viewModel.DernierUtilisateur;
+            get => _viewModel.MembreActif;
         }
+        
         private void ComboBoxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

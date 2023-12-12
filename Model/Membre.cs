@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,25 @@ namespace Model
     {
         public string Nom { get; set; }
         public bool Administrateur { get; set; }
-        public ObservableCollection <long>  ListeISBNLivres { get; set; }
-        public ObservableCollection<long> ListeISBNCommandesTraites { get; set; }
-        public ObservableCollection<long> ListeISBNCommandesAttente { get; set; }
+        public  HashSet<long> ISBNLivres {  get; set; }
+        public HashSet<long> ISBNCommandesTraites { get; set; }
+        public HashSet<long> ISBNCommandesAttente { get; set; }
+        public ObservableCollection<Livre> ListeLivres { get; set; }
+        public ObservableCollection<Commande> ListeCommandesTraites { get; set; }
+        public ObservableCollection<Commande> ListeCommandesAttente { get; set; }
 
-      
 
         public Membre(XmlElement element)
         {
+            ISBNLivres= new HashSet<long>();
+            ListeLivres = new ObservableCollection<Livre>();
+            ISBNCommandesTraites = new HashSet<long>();
+            ListeCommandesTraites =new ObservableCollection<Commande>();
+            ISBNCommandesAttente = new HashSet<long>();
+            ListeCommandesAttente =new ObservableCollection<Commande>();
             DeXML(element);
-            
         }
-        public Membre () { Nom = "nom"; Administrateur = false; }
+      
        
 
         public XmlElement VersXML(XmlDocument doc)
@@ -33,9 +41,7 @@ namespace Model
 
         public void DeXML(XmlElement elem)
         {
-            ListeISBNLivres = new ObservableCollection<long>();
-            ListeISBNCommandesTraites = new ObservableCollection<long>();
-            ListeISBNCommandesAttente = new ObservableCollection<long>();
+            
             Nom = elem.GetAttribute("nom");
             Administrateur = bool.Parse(elem.GetAttribute("administrateur"));
 
@@ -45,8 +51,10 @@ namespace Model
             foreach (XmlElement livreXml in livresNodes)
             {
                 long isbn = long.Parse( livreXml.GetAttribute("ISBN-13"));
-                ListeISBNLivres.Add(isbn);
+                ISBNLivres.Add(isbn);
             }
+           
+
             XmlNodeList commandesNodes = elem.SelectNodes("commande");
             foreach (XmlElement commandeXml in commandesNodes)
             {
@@ -54,11 +62,11 @@ namespace Model
                 
                 if (commandeXml.GetAttribute("statut")==("Traitee"))
                 {
-                    ListeISBNCommandesTraites.Add(isbnCommande);
+                    ISBNCommandesTraites.Add(isbnCommande);
                 }
                 else
                 {
-                    ListeISBNCommandesAttente.Add(isbnCommande);
+                    ISBNCommandesAttente.Add(isbnCommande);
                 }
             }
 

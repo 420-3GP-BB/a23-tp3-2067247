@@ -8,6 +8,7 @@
     Title="Choix utilisateur"
     Width="350"
     Height="170"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid>
         <StackPanel HorizontalAlignment="Center">
@@ -25,10 +26,10 @@
                     Margin="20,0,0,0"
                     DisplayMemberPath="Nom"
                     ItemsSource="{Binding listeMembres}"
-                    SelectedItem="{Binding dernierUtilisateur, Mode=TwoWay}" 
+                    SelectedItem="{Binding MembreActif}"
                     SelectionChanged="ComboBoxUser_SelectionChanged" />
 
-                <TextBlock Text="{Binding dernierUtilisateur.Nom}" />
+
 
             </StackPanel>
             <Button

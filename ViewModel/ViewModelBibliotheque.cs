@@ -15,10 +15,9 @@ namespace ViewModel
 
         public ObservableCollection<Membre> listeMembres {
             get => bibliotheque.ListeMembres; }
-        public Membre DernierUtilisateur
-        {
-            get => bibliotheque.DernierUtilisateur;
-            
+       
+        public Membre MembreActif { get => bibliotheque.DernierUtilisateur;
+            set => bibliotheque.DernierUtilisateur = value;
         }
 
         public ViewModelBibliotheque()
@@ -26,6 +25,7 @@ namespace ViewModel
             
         bibliotheque = new Bibliotheque();
         bibliotheque.ChargerEntrees(pathFichier);
+        
         }
     }
 }

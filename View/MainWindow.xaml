@@ -37,11 +37,26 @@
 
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding CanExecute="ChangerUser_CanExecute" Command="{x:Static local:MainWindow.ChangerUserCmd}" Executed="ChangerUser_Executed" />
-        <CommandBinding CanExecute="CommanderLivre_CanExecute" Command="{x:Static local:MainWindow.CommanderLivreCmd}" Executed="CommanderLivre_Executed" />
-        <CommandBinding CanExecute="OuvrirAdmin_CanExecute" Command="{x:Static local:MainWindow.OuvrirAdminCmd}" Executed="OuvrirAdmin_Executed" />
-        <CommandBinding CanExecute="Quitter_CanExecute" Command="{x:Static local:MainWindow.QuitterCmd}" Executed="Quitter_Executed" />
-        <CommandBinding CanExecute="TransfererLivre_CanExecute" Command="{x:Static local:MainWindow.TransfererLivreCmd}" Executed="TransfererLivre_Executed" />
+        <CommandBinding
+            CanExecute="ChangerUser_CanExecute"
+            Command="{x:Static local:MainWindow.ChangerUserCmd}"
+            Executed="ChangerUser_Executed" />
+        <CommandBinding
+            CanExecute="CommanderLivre_CanExecute"
+            Command="{x:Static local:MainWindow.CommanderLivreCmd}"
+            Executed="CommanderLivre_Executed" />
+        <CommandBinding
+            CanExecute="OuvrirAdmin_CanExecute"
+            Command="{x:Static local:MainWindow.OuvrirAdminCmd}"
+            Executed="OuvrirAdmin_Executed" />
+        <CommandBinding
+            CanExecute="Quitter_CanExecute"
+            Command="{x:Static local:MainWindow.QuitterCmd}"
+            Executed="Quitter_Executed" />
+        <CommandBinding
+            CanExecute="TransfererLivre_CanExecute"
+            Command="{x:Static local:MainWindow.TransfererLivreCmd}"
+            Executed="TransfererLivre_Executed" />
     </Window.CommandBindings>
 
     <Grid>
@@ -56,42 +71,128 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
             <TextBlock Style="{StaticResource styleNomUser}" Text="Nom de l'utilisateur: " />
-            <TextBlock x:Name="NomUtilisateur" Style="{StaticResource styleVarNom}" Text="nom" />
+            <TextBlock
+                x:Name="NomUtilisateur"
+                Style="{StaticResource styleVarNom}"
+                Text="nom" />
         </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
 
-            <Button Command="{x:Static local:MainWindow.ChangerUserCmd}" Content="Changer d'utlisateur" Style="{StaticResource styleBouton}" />
-            <Button Command="{x:Static local:MainWindow.OuvrirAdminCmd}" Content="Mode administrateur" Style="{StaticResource styleBouton}" />
-            <Button Command="{x:Static local:MainWindow.QuitterCmd}" Content="Quitter" Style="{StaticResource styleBouton}" />
+            <Button
+                Command="{x:Static local:MainWindow.ChangerUserCmd}"
+                Content="Changer d'utlisateur"
+                Style="{StaticResource styleBouton}" />
+            <Button
+                Command="{x:Static local:MainWindow.OuvrirAdminCmd}"
+                Content="Mode administrateur"
+                Style="{StaticResource styleBouton}" />
+            <Button
+                Command="{x:Static local:MainWindow.QuitterCmd}"
+                Content="Quitter"
+                Style="{StaticResource styleBouton}" />
         </StackPanel>
 
-        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource bordure}" />
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            Style="{StaticResource bordure}" />
 
         <StackPanel Grid.Row="1">
-            <TextBlock HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Text="Livres de l'utilisateur" />
-            <ListBox Width="600" Height="450" Margin="2,15,15,15" />
-
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal">
-                <Button Width="145" Margin="2,0,155,15" Command="{x:Static local:MainWindow.CommanderLivreCmd}" Content="Commander livre" FontSize="15" />
-                <Button Width="145" Margin="2,0,15,15" Command="{x:Static local:MainWindow.TransfererLivreCmd}" Content="Transférer livre" FontSize="15" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="20"
+                FontWeight="Bold"
+                Text="Livres de l'utilisateur" />
+            <ListBox
+                x:Name="LivresUser"
+                Width="600"
+                Height="450"
+                Margin="2,15,15,15">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Titre}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <Button
+                    Width="145"
+                    Margin="2,0,155,15"
+                    Command="{x:Static local:MainWindow.CommanderLivreCmd}"
+                    Content="Commander livre"
+                    FontSize="15" />
+                <Button
+                    Width="145"
+                    Margin="2,0,15,15"
+                    Command="{x:Static local:MainWindow.TransfererLivreCmd}"
+                    Content="Transférer livre"
+                    FontSize="15" />
             </StackPanel>
 
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
 
-            <Border Grid.Row="1" Grid.Column="1" Height="277" Style="{StaticResource bordure}">
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                Height="277"
+                Style="{StaticResource bordure}">
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Text="Commandes en attente" />
-                    <ListBox Width="600" Height="175" Margin="2,15,1,15" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Commandes en attente" />
+                    <ListBox
+                        x:Name="UserCommandesAttente"
+                        Width="600"
+                        Height="175"
+                        Margin="2,15,1,15">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Titre}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     <Button Width="150" Content="Annuler commande" />
                 </StackPanel>
             </Border>
-            <Border Grid.Row="1" Grid.Column="1" Height="260" Style="{StaticResource bordure}">
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                Height="260"
+                Style="{StaticResource bordure}">
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Text="Commandes traitées" />
-                    <ListBox Width="600" Height="175" Margin="2,15,1,15" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Commandes traitées" />
+                    <ListBox
+                        x:Name="UserCommandesTraitees"
+                        Width="600"
+                        Height="175"
+                        Margin="2,15,1,15">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Titre}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
         </StackPanel>
