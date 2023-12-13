@@ -7,17 +7,19 @@ using System.Xml;
 namespace ViewModel
 {
     public class ViewModelBibliotheque : INotifyPropertyChanged
-    {
+    {//permet de notifier les element ui du changement
         public event PropertyChangedEventHandler? PropertyChanged;
+        
         private Bibliotheque bibliotheque;
-
+        //chemin nécessaire a la sauvegrade
         private static char DIR_SEPARATOR = System.IO.Path.DirectorySeparatorChar;
         private static string pathFichier = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" +
                         $"Fichiers-3GP{DIR_SEPARATOR}bibliotheque.xml";
-
+        //liste contenant toutes les commandes ensembles pour la fenetre administartion
         public ObservableCollection<Commande> ListeToutesCommandesAttente = new ObservableCollection<Commande>();
         public ObservableCollection<Commande> ListeToutesCommandesTraites = new ObservableCollection<Commande>();
 
+        //retourne bibliotheque.ListeMembres pour respecter le mvvm
         public ObservableCollection<Membre> listeMembres
         {
             get => bibliotheque.ListeMembres;
@@ -25,7 +27,7 @@ namespace ViewModel
 
 
 
-
+        //Utilisateur affiché
         private Membre _utilisateurActif;
         public Membre UtilisateurActif
         {
@@ -40,8 +42,9 @@ namespace ViewModel
                 }
             }
         }
-
+        //stocke toute l'information sur les livres
         public Dictionary<long, Livre> DictionnaireLivres { get => bibliotheque.DictionnaireLivres; }
+       // constructeur
         public ViewModelBibliotheque()
         {
             bibliotheque = new Bibliotheque();
@@ -52,15 +55,17 @@ namespace ViewModel
             Debug.WriteLine(ListeToutesCommandesAttente.Count);
 
         }
+        //permet de notifier de changement de la propriété
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        //permet de changer l'utilisateur actif
         public void ChangerDernierUtilisateur(Membre utilisateur)
         {
             UtilisateurActif = utilisateur;
         }
-
+        //permet d'ajouter une commande dans la liste de commnades en attente appropriée
         public void AjouterCommandeAttente(Membre utilisateur, Commande commande)
         {
             commande.Proprietaire = utilisateur;
@@ -70,7 +75,7 @@ namespace ViewModel
             OnPropertyChanged(nameof(utilisateur.ListeCommandesAttente));
             
         }
-
+        //permet d'enlever un commande en attente soit en l'annulant ou pour la traiter
         public void AnnulerCommandeAttente(Membre utilisateur, Commande commande)
         {
             utilisateur.ListeCommandesAttente.Remove(commande);
@@ -80,7 +85,7 @@ namespace ViewModel
             OnPropertyChanged(nameof(ListeToutesCommandesAttente));
            
         }
-
+        //ajoute la commande traitée a la bonne lsite
         public void AjouterCommandeTraites(Membre utilisateur, Commande commande)
         {
             commande.Statut = "Traitee";
@@ -90,7 +95,7 @@ namespace ViewModel
             OnPropertyChanged(nameof(utilisateur.ListeCommandesTraites));
             OnPropertyChanged(nameof(ListeToutesCommandesTraites));
         }
-
+        //permet d'enlever la commande traitée de la liste
         public void RetirerCommandeTraites(Membre utilisateur, Commande commande)
         {
             utilisateur.ListeCommandesTraites.Remove(commande);
@@ -101,7 +106,7 @@ namespace ViewModel
 
 
         }
-
+        //permet d'ajouter un livre soit en le transfererant d'un autre utilisateur ou a partir d'une commande
         public void AjouterLivre(Membre utilisateur, Livre livre)
         {
             utilisateur.ListeLivres.Add(livre);
@@ -115,7 +120,7 @@ namespace ViewModel
             utilisateur.ISBNLivres.Add(livre.ISBN13);
             utilisateur.ListeLivres.Add(livre);
         }
-
+        //permet d'enlever un livre d'un utiliateur
         public void RetirerLivre(Membre utilisateur, Livre livre)
         {
             utilisateur.ListeLivres.Remove(livre);
@@ -123,7 +128,7 @@ namespace ViewModel
             OnPropertyChanged(nameof(utilisateur.ListeLivres));
         }
 
-
+        //pour combiner toutes les commandes des différents users ensembre
         private void CombinerCommandesAttente()
         {
             foreach (Membre membre in listeMembres)
@@ -134,7 +139,7 @@ namespace ViewModel
                 }
             }
         }
-
+        
         private void CombinerCommandesTraites()
         {
             foreach (Membre membre in listeMembres)
@@ -146,7 +151,7 @@ namespace ViewModel
             }
 
         }
-
+        //pour sauvegarder le fichier
        public void Sauvegarder()
         {
             bibliotheque.Sauvegarder(pathFichier);
