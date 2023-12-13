@@ -31,12 +31,39 @@ namespace Model
             ListeCommandesAttente =new ObservableCollection<Commande>();
             DeXML(element);
         }
-      
-       
+
+
 
         public XmlElement VersXML(XmlDocument doc)
         {
-            throw new NotImplementedException();
+            XmlElement membreElement = doc.CreateElement("membre");
+            membreElement.SetAttribute("nom", Nom);
+            membreElement.SetAttribute("administrateur", Administrateur.ToString());
+
+            foreach (long isbn in ISBNLivres)
+            {
+                XmlElement livreElement = doc.CreateElement("livre");
+                livreElement.SetAttribute("ISBN-13", isbn.ToString());
+                membreElement.AppendChild(livreElement);
+            }
+
+            foreach (long isbn in ISBNCommandesTraites)
+            {
+                XmlElement commandeElement = doc.CreateElement("commande");
+                commandeElement.SetAttribute("statut", "Traitee");
+                commandeElement.SetAttribute("ISBN-13", isbn.ToString());
+                membreElement.AppendChild(commandeElement);
+            }
+
+            foreach (long isbn in ISBNCommandesAttente)
+            {
+                XmlElement commandeElement = doc.CreateElement("commande");
+                commandeElement.SetAttribute("statut", "Attente");
+                commandeElement.SetAttribute("ISBN-13", isbn.ToString());
+                membreElement.AppendChild(commandeElement);
+            }
+
+            return membreElement;
         }
 
         public void DeXML(XmlElement elem)

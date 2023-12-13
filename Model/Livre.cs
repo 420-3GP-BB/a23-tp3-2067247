@@ -24,7 +24,26 @@ namespace Model
 
         public XmlElement VersXML(XmlDocument doc)
         {
-            throw new NotImplementedException();
+            XmlElement livreElement = doc.CreateElement("livre");
+            livreElement.SetAttribute("ISBN-13", ISBN13.ToString());
+
+            XmlElement titreElement = doc.CreateElement("titre");
+            titreElement.InnerText = Titre;
+            livreElement.AppendChild(titreElement);
+
+            XmlElement auteurElement = doc.CreateElement("auteur");
+            auteurElement.InnerText = Auteur;
+            livreElement.AppendChild(auteurElement);
+
+            XmlElement editeurElement = doc.CreateElement("editeur");
+            editeurElement.InnerText = Editeur;
+            livreElement.AppendChild(editeurElement);
+
+            XmlElement anneeElement = doc.CreateElement("annee");
+            anneeElement.InnerText = Annee.ToString();
+            livreElement.AppendChild(anneeElement);
+
+            return livreElement;
         }
     }
 }

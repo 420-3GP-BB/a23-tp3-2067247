@@ -12,7 +12,7 @@ namespace Model
 {
     public class Bibliotheque : IconversionXML
     {
-        public Membre DernierUtilisateur { get; private set; }
+        public Membre DernierUtilisateur { get; set; }
         public ObservableCollection<Membre> ListeMembres { get; private set; }
         public Dictionary<long, Livre> DictionnaireLivres { get; private set; }
         private string DernierUtilisateurNom;
@@ -21,7 +21,7 @@ namespace Model
         {
             ListeMembres = new ObservableCollection<Membre>();
             DictionnaireLivres = new Dictionary<long, Livre>();
-           
+
         }
         public void ChangerDernierUtilisateur(Membre utilisateur)
         {
@@ -30,7 +30,24 @@ namespace Model
 
         public XmlElement VersXML(XmlDocument doc)
         {
-            throw new NotImplementedException();
+            XmlElement bibliothequeElement = doc.CreateElement("bibliotheque");
+            bibliothequeElement.SetAttribute("dernierUtilisateur", DernierUtilisateurNom);
+
+            XmlElement membresElement = doc.CreateElement("membres");
+            foreach (Membre membre in ListeMembres)
+            {
+                membresElement.AppendChild(membre.VersXML(doc));
+            }
+            bibliothequeElement.AppendChild(membresElement);
+
+            XmlElement livresElement = doc.CreateElement("livres");
+            foreach (Livre livre in DictionnaireLivres.Values)
+            {
+                livresElement.AppendChild(livre.VersXML(doc));
+            }
+            bibliothequeElement.AppendChild(livresElement);
+
+            return bibliothequeElement;
         }
 
         public void DeXML(XmlElement elem)
@@ -51,20 +68,20 @@ namespace Model
             foreach (XmlElement membreNode in membresNodes)
             {
                 Membre membre = new Membre(membreNode);
-                string nomMembre= membre.Nom.Trim();
+                string nomMembre = membre.Nom.Trim();
                 membre.DeXML(membreNode);
                 ListeMembres.Add(membre);
-              if(nomMembre.Equals(DernierUtilisateurNom))
+                if (nomMembre.Equals(DernierUtilisateurNom))
                 { DernierUtilisateur = membre; }
-              foreach(long isbn in membre.ISBNLivres)
+                foreach (long isbn in membre.ISBNLivres)
                 {
-                   if (DictionnaireLivres.ContainsKey(isbn))
-                   {
+                    if (DictionnaireLivres.ContainsKey(isbn))
+                    {
                         Livre livre = DictionnaireLivres[isbn];
                         membre.ListeLivres.Add(livre);
-                   }
+                    }
 
-                    
+
                 }
                 foreach (long isbn in membre.ISBNCommandesAttente)
                 {
@@ -74,7 +91,7 @@ namespace Model
                         Commande commande = new Commande(livreApproprie.ISBN13, livreApproprie.Titre, livreApproprie.Auteur, livreApproprie.Editeur, livreApproprie.Annee, "Attente");
                         commande.Proprietaire = membre;
                         membre.ListeCommandesAttente.Add(commande);
-                     
+
                     }
                 }
                 foreach (long isbn in membre.ISBNCommandesTraites)
@@ -106,11 +123,32 @@ namespace Model
         }
 
 
+        public void Sauvegarder(string pathFichier)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement racine = doc.CreateElement("bibliotheque");
+            racine.SetAttribute("dernierUtilisateur", DernierUtilisateur.Nom);
+            doc.AppendChild(racine);
+            XmlElement membresElement = doc.CreateElement("membres");
+            foreach (Membre membre in ListeMembres)
+            {
+                membresElement.AppendChild(membre.VersXML(doc));
+            }
+            racine.AppendChild(membresElement);
 
+            XmlElement livresElement = doc.CreateElement("livres");
+            foreach (KeyValuePair<long, Livre> entry in DictionnaireLivres)
+            {
+                livresElement.AppendChild(entry.Value.VersXML(doc));
+            }
+            racine.AppendChild(livresElement);
+
+            doc.Save(pathFichier);
+        }
 
     }
 
 }
 
-    
+
 

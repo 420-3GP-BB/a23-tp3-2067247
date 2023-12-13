@@ -41,7 +41,11 @@ namespace Model
 
         public XmlElement VersXML(XmlDocument doc)
         {
-            throw new NotImplementedException();
+            XmlElement commandeElement = doc.CreateElement("commande");
+            commandeElement.SetAttribute("statut", Statut);
+            commandeElement.SetAttribute("ISBN-13", ISBN13.ToString());
+
+            return commandeElement;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace View
             InitializeComponent();
             _viewModel = new ViewModelBibliotheque();
             DataContext = _viewModel;
+            Closing += MainWindow_Closing;
 
 
 
@@ -36,7 +37,11 @@ namespace View
 
 
 
-
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+            _viewModel.Sauvegarder(); 
+        }
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
 

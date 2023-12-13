@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Xml;
 
 namespace ViewModel
 {
@@ -34,6 +35,7 @@ namespace ViewModel
                 if (_utilisateurActif != value)
                 {
                     _utilisateurActif = value;
+                    bibliotheque.DernierUtilisateur=value;
                     OnPropertyChanged(nameof(UtilisateurActif));
                 }
             }
@@ -138,5 +140,13 @@ namespace ViewModel
 
         }
 
-    }
+       public void Sauvegarder()
+        {
+            bibliotheque.Sauvegarder(pathFichier);
+        }
+
+
+    
+
+}
 }
