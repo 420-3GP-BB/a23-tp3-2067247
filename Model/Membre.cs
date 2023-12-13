@@ -20,7 +20,10 @@ namespace Model
         public ObservableCollection<Commande> ListeCommandesTraites { get; set; }
         public ObservableCollection<Commande> ListeCommandesAttente { get; set; }
 
-
+/// <summary>
+/// Constructeur a partir d'un element xmlElement
+/// </summary>
+/// <param name="element"></param>
         public Membre(XmlElement element)
         {
             ISBNLivres= new HashSet<long>();
@@ -33,7 +36,11 @@ namespace Model
         }
 
 
-
+        /// <summary>
+        /// methode permettant de convertir un objet en element xml
+        /// </summary>
+        /// <param name="doc"> le document xml que l'on rempli</param>
+        /// <returns></returns>
         public XmlElement VersXML(XmlDocument doc)
         {
             XmlElement membreElement = doc.CreateElement("membre");
@@ -65,6 +72,10 @@ namespace Model
 
             return membreElement;
         }
+        /// <summary>
+        /// methode permettant de convertir un élément xml en objet
+        /// </summary>
+        /// <param name="elem"> element à convertir</param>
 
         public void DeXML(XmlElement elem)
         {

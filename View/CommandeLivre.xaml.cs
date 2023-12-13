@@ -36,15 +36,15 @@ namespace View
         }
 
         public static RoutedCommand ComfirmerCmd = new RoutedCommand();
-
+        //valide que les cases sont remplies avec les bonnes données
         private void Comfirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        {//isbn doit etre un nombre de 13 caract`res
             if ((long.TryParse(CommandeISBN.Text, out long parsedISBN) && CommandeISBN.Text.Length == 13 &&
        !string.IsNullOrEmpty(CommandeTitre.Text) &&
        !string.IsNullOrEmpty(CommandeAuteur.Text) &&
        !string.IsNullOrEmpty(CommandeEditeur.Text)))
             {
-                //verifier si l'année est un entier plus grand que -3000
+                //verifier si l'année est un entier plus grand que -3000, cette structure a été réalisé avec l'aide de chat gpt, parceque fenetre crash < chque fois que j'essayais de modifier la saisie
                 if (int.TryParse(CommandeAnnee.Text, out int parsedAnnee) && parsedAnnee > -3000)
                 {
                     e.CanExecute = true;
@@ -59,7 +59,7 @@ namespace View
                 e.CanExecute = false;
             }
         }
-
+        //donnée accesibles dans le main window,pour la creation de la commande
         private void Comfirmer_Executed(object sender, ExecutedRoutedEventArgs e)
         {
            ISBN=long.Parse(CommandeISBN.Text);

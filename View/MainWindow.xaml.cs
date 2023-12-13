@@ -36,13 +36,14 @@ namespace View
         }
 
 
-
+        //Sauvegarder < la fermeture de la fenetre
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             
             _viewModel.Sauvegarder(); 
         }
-
+        //routed command pour changer l'utilisateur courant
+        //permet d'ouvrir une nouvelle fenetre pour choisir l'utilisateur
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
 
         private void ChangerUser_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -64,13 +65,18 @@ namespace View
 
         }
 
+
+        //permet d'ouvrir une nouvelle fenetre pour rentrer les information de la commande
         public static RoutedCommand CommanderLivreCmd = new RoutedCommand();
 
         private void CommanderLivre_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
-
+        /// <summary>
+        /// Le livre est stocké dans le dictionnaire et la commande est créee
+        /// </summary>
+        
         private void CommanderLivre_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommandeLivre commandeLivre = new CommandeLivre(_viewModel);
@@ -85,7 +91,7 @@ namespace View
             string editeur = commandeLivre.EDITEUR;
             int annee = commandeLivre.ANNEE;
 
-
+            //ajout seulement s'il n'existe pas deja 
             if (!DictionnaireLivres.ContainsKey(isbn))
             {
                 DictionnaireLivres.Add(isbn, new Livre(isbn, titre, auteur, editeur, annee));
@@ -95,11 +101,11 @@ namespace View
             _viewModel.AjouterCommandeAttente(_viewModel.UtilisateurActif,nouvelleCommande);
 
         }
-
+        //permet d'ouvrir une fenetre d'administarteur pour les utilisateurs avec le statut administrateur seulement
         public static RoutedCommand OuvrirAdminCmd = new RoutedCommand();
 
         private void OuvrirAdmin_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        {//_viewModel != null grâce a chat gpt, car sinon ça ne fonctionnait pas
             if (_viewModel != null && _viewModel.UtilisateurActif != null)
             {
                 e.CanExecute = _viewModel.UtilisateurActif.Administrateur;
@@ -117,7 +123,7 @@ namespace View
             fenetreAdmin.Owner = this;
             fenetreAdmin.ShowDialog();
         }
-
+        //permet de fermer la fenetre
         public static RoutedCommand QuitterCmd = new RoutedCommand();
 
         private void Quitter_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -130,7 +136,7 @@ namespace View
             this.Close();
         }
 
-
+        //permet de transferer les livres entre les utilisateur grace a une fenetre qui nous permet de choisir l'utilisateur désiré
 
         public static RoutedCommand TransfererLivreCmd = new RoutedCommand();
         private void TransfererLivre_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -154,7 +160,7 @@ namespace View
             _viewModel.RetirerLivre(_viewModel.UtilisateurActif, livreSelectionne);
 
         }
-
+        //permet denlever une commande de la liste des commandes en attente de l'utilisateur avant qu'elle ne soit traité, la commande doit etre séléctionnée
         public static RoutedCommand AnnulerCommandeCmd = new RoutedCommand();
         private void AnnulerCommande_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {if(UserCommandesAttente.SelectedItem != null)

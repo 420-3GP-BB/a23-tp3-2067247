@@ -23,12 +23,16 @@ namespace Model
         {
             DeXML(element); 
         }
+        //utile pour le bindinf de la fenetre admin
         public string InfoCmd
         {
             get { return $"{Titre}, {Auteur}({Annee}) ==> {Proprietaire.Nom}"; }
         }
 
-
+        /// <summary>
+        /// methode permettant de convertir un élément xml en objet
+        /// </summary>
+        /// <param name="elem">element a convertir</param>
         public override void DeXML(XmlElement elem)
             {
                  base.DeXML(elem);
@@ -37,8 +41,12 @@ namespace Model
                  Statut = elem.GetAttribute("statut");
             
              }
-        
 
+        /// <summary>
+        /// methode permettant de convertir un objet en un element xml
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns>XmlELEMENT</returns>
         public XmlElement VersXML(XmlDocument doc)
         {
             XmlElement commandeElement = doc.CreateElement("commande");

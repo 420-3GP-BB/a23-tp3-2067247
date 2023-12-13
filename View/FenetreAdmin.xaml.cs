@@ -34,12 +34,12 @@ namespace View
            
 
         }
-
+        //ferme la fenetre
         private void Revenir_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        //control du clickdroit sur un element la liste,dépendemment de la liste, la commamde est soit traitée ou délivré au bon utilisateur sous forme de livre
         private void CommandesTraites_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Commande commandeSelectionne = CommandesTraites.SelectedItem as Commande;

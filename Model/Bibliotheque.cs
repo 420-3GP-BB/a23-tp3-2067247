@@ -9,25 +9,33 @@ using System.IO;
 using System.Diagnostics;
 
 namespace Model
-{
+{/// <summary>
+/// C'est la classe qui gére les liste, les transfert entre les liste, la comparaison avec le disctionnaire, la construction des données
+/// </summary>
     public class Bibliotheque : IconversionXML
-    {
+    {//utilisateur affiché
         public Membre DernierUtilisateur { get; set; }
+        //liste des utilisateurs membres de la bibliotheque
         public ObservableCollection<Membre> ListeMembres { get; private set; }
+        //dictionnaire regroupant tous les livres, avec le isbn comme clé
         public Dictionary<long, Livre> DictionnaireLivres { get; private set; }
+        //string privé qui retourne le nom du DernierUtilisateurNom
         private string DernierUtilisateurNom;
-
+        /// <summary>
+        /// constructeur de la biblioteque
+        /// </summary>
         public Bibliotheque()
         {
             ListeMembres = new ObservableCollection<Membre>();
             DictionnaireLivres = new Dictionary<long, Livre>();
 
         }
-        public void ChangerDernierUtilisateur(Membre utilisateur)
-        {
-            DernierUtilisateur = utilisateur;
-        }
-
+       
+        /// <summary>
+        /// Permet de transformer un objet en elemenxml
+        /// </summary>
+        /// <param name="doc">le path du fichier</param>
+        /// <returns>l'element xml</returns>
         public XmlElement VersXML(XmlDocument doc)
         {
             XmlElement bibliothequeElement = doc.CreateElement("bibliotheque");
@@ -49,7 +57,10 @@ namespace Model
 
             return bibliothequeElement;
         }
-
+        /// <summary>
+        /// permet de trabsformer un element xml en objet, J'ai eu recours  chat gpt pour maider à genérer cette partie vue la complexité de la structure
+        /// </summary>
+        /// <param name="elem">L'element xml a transformer</param>
         public void DeXML(XmlElement elem)
         {
 
@@ -111,6 +122,7 @@ namespace Model
 
             }
         }
+        //cette methode est appeler pour charger les données à l'ouverture de l'application
         public void ChargerEntrees(string nomFichier)
         {
 
@@ -121,7 +133,7 @@ namespace Model
             DeXML(racine);
 
         }
-
+        //permet de sauvegarder le document en commençant par la liste des membre en appelant membre.VersXML(doc), pour enregistrer leurs attributs respectifs et ensuite les livres du ditionnaire
 
         public void Sauvegarder(string pathFichier)
         {
@@ -135,8 +147,9 @@ namespace Model
                 membresElement.AppendChild(membre.VersXML(doc));
             }
             racine.AppendChild(membresElement);
-
+            
             XmlElement livresElement = doc.CreateElement("livres");
+            //cette partie en bas est générée grace à chat gpt
             foreach (KeyValuePair<long, Livre> entry in DictionnaireLivres)
             {
                 livresElement.AppendChild(entry.Value.VersXML(doc));

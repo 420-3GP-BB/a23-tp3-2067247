@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace Model
-{
+{/// <summary>
+/// C'est la classe dont hérite LIvre et commande
+/// </summary>
     public class Article : IconversionXML
     {
         public Article(long isbn13, string titre, string auteur, string editeur, int annee)

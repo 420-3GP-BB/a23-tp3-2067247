@@ -29,18 +29,12 @@ namespace View
             DataContext = viewModel;
             ComboBoxUser.SelectedItem = viewModel.UtilisateurActif;
             
-
-
-
         }
 
-        public ObservableCollection<Membre> listeMembres
-        {
-            get => _viewModel.listeMembres;
-        }
-       
+        
+       //enregistre la selection et ferme la fenetre
         public static RoutedCommand Comfirmercmd = new RoutedCommand();
-
+        //seulement si il y a un utilisateur de sélctionné
         private void Comfirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ComboBoxUser.SelectedItem != null;
