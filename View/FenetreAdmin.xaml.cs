@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +22,41 @@ namespace View
     /// </summary>
     public partial class FenetreAdmin : Window
     {
+      
         ViewModelBibliotheque _viewModel;
         public FenetreAdmin(ViewModelBibliotheque viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
-            DataContext = viewModel;
+            DataContext = _viewModel;
+            CommandesAttente.ItemsSource = _viewModel.ListeToutesCommandesAttente;
+            CommandesTraites.ItemsSource = _viewModel.ListeToutesCommandesTraites;
+           
+
+        }
+
+        private void Revenir_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void CommandesTraites_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Commande commandeSelectionne = CommandesTraites.SelectedItem as Commande;
+            if (commandeSelectionne != null)
+            {
+                _viewModel.RetirerCommandeTraites(commandeSelectionne.Proprietaire, commandeSelectionne);
+                _viewModel.AjouterLivre(commandeSelectionne.Proprietaire, commandeSelectionne);
+            }
+        }
+        private void CommandesAttente_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Commande commandeSelectionne = CommandesAttente.SelectedItem as Commande;
+            if (commandeSelectionne != null)
+            {
+                _viewModel.AnnulerCommandeAttente(commandeSelectionne.Proprietaire, commandeSelectionne);
+                _viewModel.AjouterCommandeTraites(commandeSelectionne.Proprietaire, commandeSelectionne);
+            }
         }
     }
 }

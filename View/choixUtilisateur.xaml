@@ -31,8 +31,7 @@
                     Width="200"
                     Margin="20,0,0,0"
                     DisplayMemberPath="Nom"
-                    ItemsSource="{Binding listeMembres}"
-                    SelectedItem="{Binding Path=listeMembres[0], Mode=OneWay}" />
+                    ItemsSource="{Binding listeMembres}" />
 
 
 

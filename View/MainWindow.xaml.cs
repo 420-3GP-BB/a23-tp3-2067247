@@ -22,23 +22,21 @@ namespace View
     public partial class MainWindow : Window
     {
         private ViewModelBibliotheque _viewModel;
-        public ObservableCollection<Livre> LivresUtilisateur;
-        public ObservableCollection<Commande> CommandesAttente;
-        public ObservableCollection<Commande> CommandesTraitees;
+ 
         public MainWindow()
 
         {
             InitializeComponent();
             _viewModel = new ViewModelBibliotheque();
             DataContext = _viewModel;
-          
+
 
 
         }
 
 
 
-        
+
 
         public static RoutedCommand ChangerUserCmd = new RoutedCommand();
 
@@ -49,13 +47,14 @@ namespace View
 
         private void ChangerUser_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-           
+
             choixUtilisateur _choixUtilisateur = new choixUtilisateur(_viewModel);
             _choixUtilisateur.Owner = this;
             _choixUtilisateur.ShowDialog();
-            if (_choixUtilisateur.selection != null) { 
-            _viewModel.ChangerDernierUtilisateur(_choixUtilisateur.selection); 
-           }
+            if (_choixUtilisateur.selection != null)
+            {
+                _viewModel.ChangerDernierUtilisateur(_choixUtilisateur.selection);
+            }
 
 
         }
@@ -72,13 +71,38 @@ namespace View
             CommandeLivre commandeLivre = new CommandeLivre(_viewModel);
             commandeLivre.Owner = this;
             commandeLivre.ShowDialog();
+
+
+            Dictionary<long, Livre> DictionnaireLivres = _viewModel.DictionnaireLivres;
+            long isbn = commandeLivre.ISBN;
+            string titre = commandeLivre.TITRE;
+            string auteur = commandeLivre.AUTEUR;
+            string editeur = commandeLivre.EDITEUR;
+            int annee = commandeLivre.ANNEE;
+
+
+            if (!DictionnaireLivres.ContainsKey(isbn))
+            {
+                DictionnaireLivres.Add(isbn, new Livre(isbn, titre, auteur, editeur, annee));
+            }
+          
+            Commande nouvelleCommande = new Commande(isbn, titre, auteur, editeur, annee, "attente");
+            _viewModel.AjouterCommandeAttente(_viewModel.UtilisateurActif,nouvelleCommande);
+
         }
-        
+
         public static RoutedCommand OuvrirAdminCmd = new RoutedCommand();
-        
+
         private void OuvrirAdmin_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            if (_viewModel != null && _viewModel.UtilisateurActif != null)
+            {
+                e.CanExecute = _viewModel.UtilisateurActif.Administrateur;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
 
         }
 
@@ -101,13 +125,18 @@ namespace View
             this.Close();
         }
 
+
+
         public static RoutedCommand TransfererLivreCmd = new RoutedCommand();
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         private void TransfererLivre_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            {
+                if (LivresUser.SelectedItem != null)
+                {
+                    e.CanExecute = true;
+                }
+                else { e.CanExecute = false; }
+            }
         }
 
         private void TransfererLivre_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -115,9 +144,28 @@ namespace View
             choixUtilisateur choixUtilisateur = new choixUtilisateur(_viewModel);
             choixUtilisateur.Owner = this;
             choixUtilisateur.ShowDialog();
-            
-        }
-      
+            Livre livreSelectionne = LivresUser.SelectedItem as Livre;
+            _viewModel.AjouterLivre(choixUtilisateur.selection, livreSelectionne);
+            _viewModel.RetirerLivre(_viewModel.UtilisateurActif, livreSelectionne);
 
+        }
+
+        public static RoutedCommand AnnulerCommandeCmd = new RoutedCommand();
+        private void AnnulerCommande_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {if(UserCommandesAttente.SelectedItem != null)
+            {
+                e.CanExecute = true;
+            }else { e.CanExecute = false; }
+        }
+
+        private void AnnulerCommande_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (UserCommandesAttente.SelectedItem != null)
+            {
+                Commande commandeAnnuler =UserCommandesAttente.SelectedItem as Commande;
+           _viewModel.AnnulerCommandeAttente(_viewModel.UtilisateurActif, commandeAnnuler);
+        }
+
+    }
     }
 }

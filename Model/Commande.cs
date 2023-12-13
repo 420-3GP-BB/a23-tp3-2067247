@@ -10,7 +10,7 @@ namespace Model
     public class Commande : Article
     {
         public string Statut { get; set; }
-
+        public Membre Proprietaire { get; set; }
 
 
         public Commande(long isbn13, string titre, string auteur, string editeur, int annee, string statut)
@@ -23,7 +23,10 @@ namespace Model
         {
             DeXML(element); 
         }
-
+        public string InfoCmd
+        {
+            get { return $"{Titre}, {Auteur}({Annee}) ==> {Proprietaire.Nom}"; }
+        }
 
 
         public override void DeXML(XmlElement elem)

@@ -27,6 +27,7 @@ namespace View
             InitializeComponent();
            _viewModel = viewModel;
             DataContext = viewModel;
+            ComboBoxUser.SelectedItem = viewModel.UtilisateurActif;
             
 
 

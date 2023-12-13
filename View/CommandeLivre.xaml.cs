@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,12 @@ namespace View
     public partial class CommandeLivre : Window
     {
         ViewModelBibliotheque _viewModel;
+        public long ISBN { get; private set; }
+        public string TITRE { get; private set; }
+        public string AUTEUR { get; private set; }
+        public string EDITEUR { get; private set; }
+        public int ANNEE { get; private set; }
+
         public CommandeLivre(ViewModelBibliotheque viewModel)
         {
             InitializeComponent();
@@ -28,6 +35,40 @@ namespace View
             DataContext = viewModel;
         }
 
-        
+        public static RoutedCommand ComfirmerCmd = new RoutedCommand();
+
+        private void Comfirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if ((long.TryParse(CommandeISBN.Text, out long parsedISBN) && CommandeISBN.Text.Length == 13 &&
+       !string.IsNullOrEmpty(CommandeTitre.Text) &&
+       !string.IsNullOrEmpty(CommandeAuteur.Text) &&
+       !string.IsNullOrEmpty(CommandeEditeur.Text)))
+            {
+                //verifier si l'année est un entier plus grand que -3000
+                if (int.TryParse(CommandeAnnee.Text, out int parsedAnnee) && parsedAnnee > -3000)
+                {
+                    e.CanExecute = true;
+                }
+                else
+                {
+                    e.CanExecute = false;
+                }
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void Comfirmer_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+           ISBN=long.Parse(CommandeISBN.Text);
+           TITRE = CommandeTitre.Text;
+           AUTEUR= CommandeAuteur.Text;
+           EDITEUR= CommandeEditeur.Text;
+           ANNEE=int.Parse(CommandeAnnee.Text);
+
+            this.Close();
+        }
     }
 }

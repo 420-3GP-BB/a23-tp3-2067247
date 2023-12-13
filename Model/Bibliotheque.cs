@@ -72,6 +72,7 @@ namespace Model
                     {
                         Livre livreApproprie = DictionnaireLivres[isbn];
                         Commande commande = new Commande(livreApproprie.ISBN13, livreApproprie.Titre, livreApproprie.Auteur, livreApproprie.Editeur, livreApproprie.Annee, "Attente");
+                        commande.Proprietaire = membre;
                         membre.ListeCommandesAttente.Add(commande);
                      
                     }
@@ -82,6 +83,7 @@ namespace Model
                     {
                         Livre livreApproprie = DictionnaireLivres[isbn];
                         Commande commande = new Commande(livreApproprie.ISBN13, livreApproprie.Titre, livreApproprie.Auteur, livreApproprie.Editeur, livreApproprie.Annee, "Attente");
+                        commande.Proprietaire = membre;
                         membre.ListeCommandesTraites.Add(commande);
 
                     }

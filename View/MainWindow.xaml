@@ -57,6 +57,10 @@
             CanExecute="TransfererLivre_CanExecute"
             Command="{x:Static local:MainWindow.TransfererLivreCmd}"
             Executed="TransfererLivre_Executed" />
+        <CommandBinding
+            CanExecute="AnnulerCommande_CanExecute"
+            Command="{x:Static local:MainWindow.AnnulerCommandeCmd}"
+            Executed="AnnulerCommande_Executed" />
     </Window.CommandBindings>
 
     <Grid>
@@ -170,7 +174,10 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Button Width="150" Content="Annuler commande" />
+                    <Button
+                        Width="150"
+                        Command="{x:Static local:MainWindow.AnnulerCommandeCmd}"
+                        Content="Annuler commande" />
                 </StackPanel>
             </Border>
             <Border
