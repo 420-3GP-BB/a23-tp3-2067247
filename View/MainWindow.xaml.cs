@@ -91,7 +91,7 @@ namespace View
                 DictionnaireLivres.Add(isbn, new Livre(isbn, titre, auteur, editeur, annee));
             }
           
-            Commande nouvelleCommande = new Commande(isbn, titre, auteur, editeur, annee, "attente");
+            Commande nouvelleCommande = new Commande(isbn, titre, auteur, editeur, annee, "Attente");
             _viewModel.AjouterCommandeAttente(_viewModel.UtilisateurActif,nouvelleCommande);
 
         }

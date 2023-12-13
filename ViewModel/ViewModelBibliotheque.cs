@@ -65,6 +65,7 @@ namespace ViewModel
         {
             commande.Proprietaire = utilisateur;
             utilisateur.ListeCommandesAttente.Add(commande);
+            utilisateur.ISBNCommandesAttente.Add(commande.ISBN13);
             ListeToutesCommandesAttente.Add(commande);
             OnPropertyChanged(nameof(utilisateur.ListeCommandesAttente));
             
@@ -74,6 +75,7 @@ namespace ViewModel
         {
             utilisateur.ListeCommandesAttente.Remove(commande);
             ListeToutesCommandesAttente.Remove(commande);
+            utilisateur.ISBNCommandesAttente.Remove(commande.ISBN13);
             OnPropertyChanged(nameof(utilisateur.ListeCommandesAttente));
             OnPropertyChanged(nameof(ListeToutesCommandesAttente));
            
@@ -83,6 +85,7 @@ namespace ViewModel
         {
             commande.Statut = "Traitee";
             utilisateur.ListeCommandesTraites.Add(commande);
+            utilisateur.ISBNCommandesTraites.Add(commande.ISBN13);
             ListeToutesCommandesTraites.Add(commande);
             OnPropertyChanged(nameof(utilisateur.ListeCommandesTraites));
             OnPropertyChanged(nameof(ListeToutesCommandesTraites));
@@ -91,6 +94,7 @@ namespace ViewModel
         public void RetirerCommandeTraites(Membre utilisateur, Commande commande)
         {
             utilisateur.ListeCommandesTraites.Remove(commande);
+            utilisateur.ISBNCommandesTraites.Remove(commande.ISBN13);
             ListeToutesCommandesTraites.Remove(commande);
             OnPropertyChanged(nameof(utilisateur.ListeCommandesTraites));
             OnPropertyChanged(nameof(ListeToutesCommandesTraites));
@@ -101,18 +105,21 @@ namespace ViewModel
         public void AjouterLivre(Membre utilisateur, Livre livre)
         {
             utilisateur.ListeLivres.Add(livre);
+            utilisateur.ISBNLivres.Add(livre.ISBN13);
             OnPropertyChanged(nameof(utilisateur.ListeLivres));
         }
 
         public void AjouterLivre(Membre utilisateur, Commande commande)
         {
             Livre livre = new Livre(commande.ISBN13, commande.Titre, commande.Auteur, commande.Editeur, commande.Annee);
+            utilisateur.ISBNLivres.Add(livre.ISBN13);
             utilisateur.ListeLivres.Add(livre);
         }
 
         public void RetirerLivre(Membre utilisateur, Livre livre)
         {
             utilisateur.ListeLivres.Remove(livre);
+            utilisateur.ISBNLivres.Remove(livre.ISBN13);
             OnPropertyChanged(nameof(utilisateur.ListeLivres));
         }
 
